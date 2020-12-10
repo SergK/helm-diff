@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-set -ex
-
 # Shamelessly copied from https://github.com/technosophos/helm-template
 
 PROJECT_NAME="helm-diff"
@@ -71,7 +69,7 @@ verifySupported() {
 
 # getDownloadURL checks the latest available version.
 getDownloadURL() {
-  version=$(git -C "$HELM_PLUGIN_DIR" describe --tags --exact-match 2>/dev/null || :)
+  version=$(git -C "$HELM_PLUGIN_DIR" describe --tags --exact-match)
   if [ -n "$version" ]; then
     DOWNLOAD_URL="https://github.com/$PROJECT_GH/releases/download/$version/helm-diff-$OS.tgz"
   else
@@ -131,7 +129,7 @@ testVersion() {
 
 #Stop execution on any error
 trap "fail_trap" EXIT
-set -e
+set -ex
 initArch
 initOS
 verifySupported
